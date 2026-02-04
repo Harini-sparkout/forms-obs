@@ -1,0 +1,27 @@
+<form #detailsForm="ngForm"(ngSubmit)="submit(detailsForm)">
+    <input required name="name" type="text" [(ngModel)]="details.name" #userName="ngModel">
+    @if((userName.touched|| detailsForm.submitted) && userName.invalid){
+      <p>name is required</p>  
+    }
+    <div ngModelGroup="moreDetails">
+        <input required #userAge="ngModel" min="18" name="age" type="number" [(ngModel)]="details.age">
+        @if((userAge.touched||detailsForm.submitted) && userAge.errors){
+            @if(userAge.errors['required']){
+             <p>age is required</p>
+            }
+            
+            @if(userAge.errors['min']){
+                <p>must be greater than 18 </p>
+            }
+        }
+   <select name="gender" required [(ngModel)]="details.gender" #gender="ngModel">
+    <option value="">select gender</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+   </select>
+   @if((gender.touched || detailsForm.submitted) && gender.invalid){
+    <p>gender is required</p>
+   }
+    </div>
+    <button type="submit">submit</button>
+</form>
